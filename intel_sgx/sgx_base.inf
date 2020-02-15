@@ -1,0 +1,53 @@
+;/*++
+;
+;Copyright (c) 2017 Intel Corporation All rights Reserved
+;
+;Module Name:
+;
+;    sgx_base.inf
+;
+;Abstract:
+;    INF file for installing the Software Guard Extensions Device Driver
+;
+[Version]
+Signature   = "$WINDOWS NT$"
+Class       = System
+ClassGuid   = {4D36E97D-E325-11CE-BFC1-08002BE10318}
+Provider    = %INTC%
+DriverVer = 09/19/2017,1.8.105.38781
+CatalogFile = sgx_base.cat
+
+[SourceDisksNames]
+1 = %Disk%,,,""
+
+[SourceDisksFiles]
+
+[DestinationDirs]
+DefaultDestDir = 13
+
+[Manufacturer]
+%StdMfg%=SGXPSW,NTamd64.10.0...15063
+
+[SGXPSW.NTamd64.10.0...15063]
+%SGXPSW.DeviceDesc%=SGXPSW_Device, acpi\int0e0c
+
+[SGXPSW_Device.NT]
+Include=umpass.inf
+Needs=Umpass
+
+[SGXPSW_Device.NT.Services]
+Include=umpass.inf
+Needs=Umpass.Services
+
+[SGXPSW_Device.NT.Components]
+AddComponent = psw_installer,, PswInstaller_component
+
+[PswInstaller_component]
+ComponentIds = VEN_INT&DEV_0E0C
+Description = "Intel(R) Software Guard Extensions Software"
+
+[Strings]
+Disk = "Intel(R) Software Guard Extensions Install Disk"
+INTC = "Intel Corporation"
+StdMfg = "Intel"
+SGXPSW.DeviceDesc = "Intel(R) Software Guard Extensions Device" 
